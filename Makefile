@@ -16,15 +16,15 @@ all:
 	latexmk $(LATEXMK_OPTIONS) main.tex
 
 clean:
-	git clean -f
-	git clean -f -d
-	git clean -f -X
+	git clean -f -d -X
 
 chktex:
 	chktex $(CHKTEX_OPTIONS) $(shell find . -name "*.tex")
 
 formatall:
 	for file in $(shell find . -regex ".*\.\(tex\|cls\|sty\)\$$"); do \
+        echo "\n\n"; \
+        echo "Formatting $$file ...\n"; \
 		latexindent $(LATEXINDENT_OPTIONS) $$file; \
 	done
 
@@ -36,4 +36,4 @@ updatecls:
 # to build section1 of chapter1, run make chapter1/section1 -B
 # you might need to run make clean first
 %:
-	latexmk $(LATEXMK_OPTIONS) -outdir=$(MAKECMDGOALS) $(shell find $(MAKECMDGOALS) -maxdepth 1 -not -type d)
+	latexmk $(LATEXMK_OPTIONS) -outdir=$(MAKECMDGOALS) $(shell find $(MAKECMDGOALS) -maxdepth 1 -regex ".*\.tex\$$" -not -type d)
