@@ -1,0 +1,39 @@
+\documentclass[oneside]{custom}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{tikz}
+\usepackage{lipsum}
+\usetikzlibrary{calc}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[double,double distance=5pt,ultra thick] ($(current page.north west) + (2cm,-2cm)$) rectangle ($(current page.south east) + (-2cm,2cm)$);
+    \end{tikzpicture}
+
+    \begin{center}
+        \vfill
+        \raisebox{10pt}{\rule{\textwidth}{1pt}}
+        {\Huge\bf This is a title} \\
+        \raisebox{-1pt}{\rule{\textwidth}{1pt}}
+        \medskip
+
+        {\large Ngo Quang Duong} \\
+        \medskip
+        {\today}
+        \vfill
+    \end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\import{chapter0/}{chapter0.tex}
+
+\import{chapter1/}{chapter1.tex}
+
+\begin{thebibliography}{9}
+\bibitem[1]{key} \lipsum[1]
+\bibitem[2]{keyy} \lipsum[2]
+\end{thebibliography}
+
+\end{document}
