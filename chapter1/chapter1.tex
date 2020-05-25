@@ -1,21 +1,14 @@
 \documentclass[class=custom,crop=false]{standalone}
-\usepackage{pgf,tikz}
-\usepackage{lipsum}
 
 \begin{document}
 
 \chapter{Introduction}
 
-\section{Section 1}
+\subimport{section1/}{section1.tex}
 
-\lipsum[1-2]
+\subimport{section2/}{section2.tex}
 
-\section{Section 2}
+\subimport{section3/}{section3.tex}
 
-\lipsum[3-6]
-
-\section{Section 3}
-
-\lipsum[4-8]
 
 \end{document}

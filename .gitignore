@@ -277,3 +277,5 @@ TSWLatexianTemp*
 
 # Customize
 *.pdf
+*.out.ps
+*.bak[0-9]*

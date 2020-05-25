@@ -4,6 +4,7 @@
 \LoadClass[oneside]{book}
 
 \RequirePackage{import}
+\RequirePackage[subpreambles=true]{standalone}
 
 \RequirePackage{fancyhdr}
 \RequirePackage{xcolor}

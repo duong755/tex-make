@@ -1,15 +1,39 @@
-LATEX_OPTIONS = -synctex=1 -interaction=nonstopmode -recorder -file-line-error -shell-escape -halt-on-error -pdf
-
-CHKTEX_OPTIONS = --localrc ./.chktexrc --headererr --inputfiles --format=1 --verbosity=2
+LATEXMK_OPTIONS := -synctex=1 $\
+				   -interaction=nonstopmode $\
+				   -recorder $\
+				   -file-line-error $\
+				   -shell-escape $\
+				   -halt-on-error $\
+				   -pdf
+CHKTEX_OPTIONS := --localrc ./.chktexrc $\
+				  --headererr --inputfiles $\
+				  --format=1 $\
+				  --verbosity=2
+LATEXINDENT_OPTIONS := --local=indentconfig.yaml $\
+					   --overwrite
 
 all:
-	latexmk $(LATEX_OPTIONS) main.tex
+	latexmk $(LATEXMK_OPTIONS) main.tex
+
 clean:
-	git clean -fdX
+	git clean -f
+	git clean -f -d
+	git clean -f -X
+
 chktex:
 	chktex $(CHKTEX_OPTIONS) $(shell find . -name "*.tex")
-usecls:
+
+formatall:
+	for file in $(shell find . -regex ".*\.\(tex\|cls\|sty\)\$$"); do \
+		latexindent $(LATEXINDENT_OPTIONS) $$file; \
+	done
+
+updatecls:
 	mkdir -p $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class
-	cp ./*.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class
+	cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class
+
+# to build chapter0, run make chapter0 -B
+# to build section1 of chapter1, run make chapter1/section1 -B
+# you might need to run make clean first
 %:
-	latexmk $(LATEX_OPTIONS) -output-directory=$(MAKECMDGOALS) $(MAKECMDGOALS)/$(MAKECMDGOALS).tex
+	latexmk $(LATEXMK_OPTIONS) -outdir=$(MAKECMDGOALS) $(shell find $(MAKECMDGOALS) -maxdepth 1 -not -type d)
