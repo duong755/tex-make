@@ -75,10 +75,10 @@ I obtained some solutions for that, which include:
 
 -   `\input{}`
 -   `\include{}`
--   [Package `subfiles`](https://ctan.org/pkg/subfiles)
--   [Package `standalone`](https://ctan.org/pkg/standalone)
+-   [`subfiles`](https://ctan.org/pkg/subfiles)
+-   [`standalone`](https://ctan.org/pkg/standalone) and [`import`](https://ctan.org/pkg/import)
 
-I have chosen package `standalone` for this project. But first, let me summarize the advantages and disadvantages of these solutions (from **StackOverflow** and **Overleaf**):
+I have chosen `standalone` and `import` packages for this project. But first, let me summarize the advantages and disadvantages of these solutions (from **StackOverflow** and **Overleaf**):
 
 -   `\input{filename}`: this is equivalent to the content the file.
 -   `\include{filename}`: almost identical to `\input{filename}`, but it does a `\clearpage` before and after the command.
@@ -87,10 +87,10 @@ I have chosen package `standalone` for this project. But first, let me summarize
 
 Both `\input{}` and `\include{}` are not usable for files that has preamble or `\begin{document}`. So you have to provide all the packages you need in the root file.
 
--   Package `subfiles` allows us to use `\begin{document}` in the subfiles but the subfiles can not have their own preambles. With this, subfiles can be nested.
--   Package `standalone` provide `\import{path}{filename}` and `\subimport{path}{filename}`. Beside allowing `\begin{document}` in the subfiles, this package allows the subfiles to have their own preambles. `standalone` also can be nested, but it looks more naturally, in my opinion.
+-   `subfiles` allows us to use `\begin{document}` in the subfiles but the subfiles can not have their own preambles. With this, subfiles can be nested.
+-   `import` provide `\import{path}{filename}` and `\subimport{path}{filename}`. Together with `standalone` package, this package allows the subfiles to have their own preambles. With `import`, the path to the subfiles can be relative with the file that imports it only, instead of relative to the root file.
 
-So that's why I have chosen package `standalone`. It is the most flexible. With this package, I can build PDF for just the part that I work with, not the entire document, and I can freely load the packages that my part needs. But of course, this solution has caveat - _performance_. But for now I don't mind it. Maybe, the project will serve both solution: `\input` and `standlone`, `\input` for the whole document, `standlone` for parts of it.
+So that's why I have chosen `standalone` and `import` packages. It is the most flexible solution in my opinion. With these packages, I can build PDF for just the part that I work with, not the entire document, and I can freely load the packages that my part needs. But of course, this solution has caveat - _performance_. But for now, I don't mind it. Maybe someday, the project will serve both solution: `\input` and `standalone`, `\input` for the whole document, `standalone` for parts of it.
 
 ### Chapters, Sections and so on
 
