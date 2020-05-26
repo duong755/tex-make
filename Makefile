@@ -6,7 +6,8 @@ LATEXMK_OPTIONS := -synctex=1 $\
 				   -halt-on-error $\
 				   -pdf
 CHKTEX_OPTIONS := --localrc ./.chktexrc $\
-				  --headererr --inputfiles $\
+				  --headererr $\
+                  --inputfiles $\
 				  --format=1 $\
 				  --verbosity=2
 LATEXINDENT_OPTIONS := --local=indentconfig.yaml $\
@@ -21,6 +22,7 @@ clean:
 chktex:
 	chktex $(CHKTEX_OPTIONS) $(shell find . -name "*.tex")
 
+# all files and directories should not contain any white space in their names
 formatall:
 	for file in $(shell find . -regex ".*\.\(tex\|cls\|sty\)\$$"); do \
         echo "\n\n"; \
