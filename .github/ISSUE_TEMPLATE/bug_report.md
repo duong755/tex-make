@@ -9,8 +9,8 @@ labels: "bug"
 
 -   Platform:
 -   `TeX Live`:
--   `Makefile`
--   `indenntconfig.yaml`:
+-   `Makefile`:
+-   `indentconfig.yaml`:
 -   `.chktexrc`:
 
 ## How to reproduce
