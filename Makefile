@@ -28,7 +28,7 @@ cleanbak:
 
 # remove auxiliary files that generated while latexmk running
 cleanaux:
-	rm -f $(shell find . -regex ".*\.\(aux\|fdb_latexmk\|fls\|log\|sta\|synctex\.gz\|toc\)$$")
+	rm -f $(shell find . -regex ".*\.\(aux\|fdb_latexmk\|fls\|log\|sta\|synctex\.gz\|toc\|nav\|snm\|out\)$$")
 
 # remove pdf, dvi files
 cleanoutput:
