@@ -53,7 +53,7 @@ The `Makefile` file, in this repository, provides the following targets:
 -   `formatall`:
     -   This formats your source code by using `latexindent.pl`, which is configurable with `indentconfig.yaml` file. Just like `chktex`, you should format your code to ensure consistency.
 -   `updatecls`:
-    -   The template repository provides a custom `.cls` file. In order to use this `.cls` anywhere, this target copy it to an appropriate place.
+    -   The template repository provides its own `.cls` file. In order to use this `.cls` anywhere, this target copies it to an appropriate place.
 -   `%` (pattern rule):
     -   For those who are not so familiar with `Makefile`: you might consider `%` as a wildcard for any string. More specific, if you run `make <target>`, where `<target>` doesn't match `all`, `clean`, `formatall`, ... - In other words, the others target name, it will use this pattern rule `%`.
     -   In this case, the pattern rule is used to compile subfiles of the document. I have splitted the whole document into chapters, chapters to smaller sections and put them in the corresponding directories.
@@ -76,7 +76,7 @@ But if you want to change something to fit your needs, you can tweak the followi
 
 -   `custom.cls`
 -   `indentconfig.yaml`
--   `.latexrc`
+-   `.chktexrc`
 -   `Makefile`:
     -   Create your own rules.
     -   Remove rules.
