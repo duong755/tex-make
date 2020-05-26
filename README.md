@@ -37,6 +37,8 @@ For Windows users, `Git` must be installed with `Git bash`, since all scripts us
 
 ## How to use
 
+:warning: Don't delete `.editorconfig` or remove the `[Makefile]` part from it - your `Makefile` will might not work anymore.
+
 In your shell (terminal), use the command: `make <target>`.
 
 The `Makefile` file, in this repository, provides the following targets:
@@ -55,7 +57,7 @@ The `Makefile` file, in this repository, provides the following targets:
 -   `%` (pattern rule):
     -   For those who are not so familiar with `Makefile`: you might consider `%` as a wildcard for any string. More specific, if you run `make <target>`, where `<target>` doesn't match `all`, `clean`, `formatall`, ... - In other words, the others target name, it will use this pattern rule `%`.
     -   In this case, the pattern rule is used to compile subfiles of the document. I have splitted the whole document into chapters, chapters to smaller sections and put them in the corresponding directories.
-    -   This rule depends **heavily** on how I organize the project structure.
+    -   This rule depends **heavily** on how I organize the project structure and the packages I use (`standalone`, `import`)
     -   To compile `chapter0`, run
     ```shell
     make chapter0 -B
@@ -65,3 +67,19 @@ The `Makefile` file, in this repository, provides the following targets:
     ```shell
     make chapter1/section2 -B
     ```
+
+## Customize
+
+As I tested, all these configurations are good enough to work with.
+
+But if you want to change something to fit your needs, you can tweak the following files:
+
+-   `custom.cls`
+-   `indentconfig.yaml`
+-   `.latexrc`
+-   `Makefile`:
+    -   Create your own rules.
+    -   Remove rules.
+    -   Change the recipes.
+
+And of course, you can create your own document.
