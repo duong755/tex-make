@@ -63,6 +63,8 @@ Before submitting your pull request, make sure that the following has been done:
 
 At the root, we have the "entry file" `main.tex`, `custom.cls`, `indentconfig.yaml`, `Makefile`, `.chktexrc`, `.editorconfig` - which are very important while using the template.
 
+I call `main.tex` the _root file_.
+
 The content of the sample document are splitted into chapters, sections and put in the corresponding directories.
 
 ## The Ideas Behind
@@ -87,8 +89,8 @@ I have chosen `standalone` and `import` packages for this project. But first, le
 
 Both `\input{}` and `\include{}` are not usable for files that has preamble or `\begin{document}`. So you have to provide all the packages you need in the root file.
 
--   `subfiles` allows us to use `\begin{document}` in the subfiles but the subfiles can not have their own preambles. With this, subfiles can be nested.
--   `import` provide `\import{path}{filename}` and `\subimport{path}{filename}`. Together with `standalone` package, this package allows the subfiles to have their own preambles. With `import`, the path to the subfiles can be relative with the file that imports it only, instead of relative to the root file.
+-   `subfiles` allows us to use `\begin{document}` in the subfiles but the subfiles can not have their own preambles. Subfiles can be nested but have to point to the root file.
+-   `import` provide `\import{path}{filename}` and `\subimport{path}{filename}`. Together with `standalone` package, this package allows the subfiles to have their own preambles. The subfiles don't have to specify the path to the root file.
 
 So that's why I have chosen `standalone` and `import` packages. It is the most flexible solution in my opinion. With these packages, I can build PDF for just the part that I work with, not the entire document, and I can freely load the packages that my part needs. But of course, this solution has caveat - _performance_. But for now, I don't mind it. Maybe someday, the project will serve both solution: `\input` and `standalone`, `\input` for the whole document, `standalone` for parts of it.
 
