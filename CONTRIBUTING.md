@@ -67,6 +67,44 @@ I call `main.tex` the _root file_.
 
 The content of the sample document are splitted into chapters, sections and put in the corresponding directories.
 
+## Features
+
+Formatting, compiling, linting, cleaning... all of these features are brought to you by `Makefile`
+
+In your shell (terminal), use the command: `make <target>`.
+
+The `Makefile` file, in this repository, provides the following targets:
+
+-   `all`:
+    -   This is the default target if no target is provided.
+    -   In this case, `make all` or `make` compile and build the whole document.
+-   `clean`:
+    -   In this case, `make clean` removes untracked files and files that ignored by `Git`.
+-   `cleanaux`:
+    -   `make cleanaux` removes auxiliary files that generated while compiling.
+-   `cleanoutput`:
+    -   `make cleanoutput` remove `pdf` and `dvi` files.
+-   `chktex`:
+    -   This finds possible errors in your TeX source code, forces you to write your code in a consistent style. The configuration for this is contained in `.chktexrc`.
+-   `formatall`:
+    -   This formats your source code by using `latexindent.pl`, which is configurable with `indentconfig.yaml` file. Just like `chktex`, you should format your code to ensure consistency.
+-   `updatecls`:
+    -   The template repository provides its own `.cls` file. In order to use this `.cls` anywhere, this target copies it to an appropriate place.
+-   `%` (pattern rule):
+    -   For those who are not so familiar with `Makefile`: you might consider `%` as a wildcard for any string. More specific, if you run `make <target>`, where `<target>` doesn't match `all`, `clean`, `formatall`,... it will use this pattern rule `%`.
+    -   In this case, the pattern rule is used to compile subfiles of the document. I have splitted the whole document into chapters, chapters to smaller sections and put them in the corresponding directories.
+    -   This rule depends **heavily** on how I organize the project structure and the packages I use (`standalone`, `import`). See **The Ideas Behind**(next) to understand the idea.
+    -   For examples:
+    -   To compile `chapter0`, run:
+    ```shell
+    make chapter0 -B
+    ```
+    -   `make` won't run if the target name is identical to any directory path or file name so `-B` is required.
+    -   To compile `section2` of `chapter1`, run:
+    ```shell
+    make chapter1/section2 -B
+    ```
+
 ## The Ideas Behind
 
 ### `\usepackage[subpreambles=true]{standalone}` is awesome

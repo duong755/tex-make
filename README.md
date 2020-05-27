@@ -29,7 +29,7 @@ If you would like to contribute or find out the essential, the idea of this proj
 -   [`TeX Live`](http://tug.org/texlive/acquire-netinstall.html) (`ChkTeX` and `latexindent.pl` are available as part of `TeX Live`)
 -   [`Git`](https://git-scm.com)
 
-I strongly recommend users to install `TeX Live` via `.exe` (for Windows), `.tar.gz` (for others) instead of any package manager.
+I strongly recommend users to install `TeX Live` via `.exe` (for Windows), `.tar.gz` (for other platforms) instead of any package manager.
 
 For Windows users, `Git` must be installed with `Git bash`, since all scripts used in `Makefile` are not compatible with Windows command prompt nor Powershell.
 
@@ -45,43 +45,19 @@ For Windows users, `Git` must be installed with `Git bash`, since all scripts us
 
 :warning: Don't delete `.editorconfig` or remove the `[Makefile]` part from it - your `Makefile` will might not work anymore, since `Makefile` uses tabs instead of spaces for indentation.
 
-In your shell (terminal), use the command: `make <target>`.
-
-The `Makefile` file, in this repository, provides the following targets:
-
--   `all`:
-    -   This is the default target if no target is provided.
-    -   In this case, `make all` or `make` compile and build the whole document.
--   `clean`:
-    -   In this case, `make clean` removes untracked files and files that ignored by `Git`.
--   `cleanaux`:
-    -   `make cleanaux` removes auxiliary files that generated while compiling.
--   `cleanoutput`:
-    -   `make cleanoutput` remove `pdf` and `dvi` files.
--   `chktex`:
-    -   This finds possible errors in your TeX source code, forces you to write your code in a consistent style. The configuration for this is contained in `.chktexrc`.
--   `formatall`:
-    -   This formats your source code by using `latexindent.pl`, which is configurable with `indentconfig.yaml` file. Just like `chktex`, you should format your code to ensure consistency.
--   `updatecls`:
-    -   The template repository provides its own `.cls` file. In order to use this `.cls` anywhere, this target copies it to an appropriate place.
--   `%` (pattern rule):
-    -   For those who are not so familiar with `Makefile`: you might consider `%` as a wildcard for any string. More specific, if you run `make <target>`, where `<target>` doesn't match `all`, `clean`, `formatall`,... it will use this pattern rule `%`.
-    -   In this case, the pattern rule is used to compile subfiles of the document. I have splitted the whole document into chapters, chapters to smaller sections and put them in the corresponding directories.
-    -   This rule depends **heavily** on how I organize the project structure and the packages I use (`standalone`, `import`). See [CONTRIBUTING.md](./CONTRIBUTING.md) to understand the idea.
-    -   For examples:
-    -   To compile `chapter0`, run:
-    ```shell
-    make chapter0 -B
-    ```
-    -   `make` won't run if the target name is identical to any directory path or file name so `-B` is required.
-    -   To compile `section2` of `chapter1`, run:
-    ```shell
-    make chapter1/section2 -B
-    ```
+1. Install `TeX Live`, `Git`, `Makefile`.
+2. Downloads or clone this repository.
+3. Run `make updatecls` to make the `.cls` file available.
+4. At the project root, run `make` to compile the whole document.
+5. Run `make <directory-name> -B` to compile part of the document which put in `<directory-name>`.
+6. Run `make formatall` to format `.tex`, `.cls`, `.sty` files. You can tweak the format configuration in `indentconfig.yaml`
+7. Run `make chktex` to lint `.tex` files. Lint configuration is put in `.chktexrc`.
+8. Run `make cleanaux` to remove auxiliary files, `make cleanoutput` to remove `.pdf`, `.dvi` files.
+9. Customize (next).
 
 ## Customize
 
-As I tested, all these configurations are good enough to work with.
+As I have tested, all these configurations are good enough to work with.
 
 But if you want to change something to fit your needs, you can tweak the following files:
 
