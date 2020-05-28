@@ -56,4 +56,12 @@ updatecls:
 %:
 	if [ -d $(MAKECMDGOALS) ]; then \
 		latexmk $(LATEXMK_OPTIONS) -outdir=$(MAKECMDGOALS) "$(lastword $(subst /, ,$(realpath $(MAKECMDGOALS)))).tex"; \
-	fi
+	fi;
+
+	if [ -f $(MAKECMDGOALS) ]; then \
+		latexmk $(LATEXMK_OPTIONS) -outdir=$(shell dirname $(MAKECMDGOALS)) $(MAKECMDGOALS); \
+	fi;
+
+	if [ -f "$(MAKECMDGOALS).tex" ]; then \
+		latexmk $(LATEXMK_OPTIONS) -outdir=$(shell dirname $(MAKECMDGOALS)) "$(MAKECMDGOALS).tex"; \
+	fi;
