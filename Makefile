@@ -54,4 +54,6 @@ updatecls:
 # to build section1 of chapter1, run make chapter1/section1 -B
 # you might need to run make clean first
 %:
-	latexmk $(LATEXMK_OPTIONS) -outdir=$(MAKECMDGOALS) $(shell find $(MAKECMDGOALS) -maxdepth 1 -regex ".*\.tex\$$" -not -type d)
+	if [ -d $(MAKECMDGOALS) ]; then \
+		latexmk $(LATEXMK_OPTIONS) -outdir=$(MAKECMDGOALS) "$(lastword $(subst /, ,$(realpath $(MAKECMDGOALS)))).tex"; \
+	fi
