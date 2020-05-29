@@ -50,4 +50,4 @@ updatecls:
 
 # remove auxiliary files that generated while latexmk running
 %.cleanaux: %.tex
-	latexmk -C -outdir=$(shell dirname $(MAKECMDGOALS)) $<
+	latexmk -c -outdir=$(shell dirname $(MAKECMDGOALS)) $<
