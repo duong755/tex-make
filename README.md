@@ -39,13 +39,14 @@ For Windows users, `Git` must be installed with `Git bash`, since all scripts us
 
 ### Windows
 
+-   Perl programming language (since `latexmk`, `latexindent.pl` needs Perl)
 -   GNUmake (with MinGW)
 
-## How to use
+## Workflow
 
 :warning: Don't delete `.editorconfig` or remove the `[Makefile]` part from it - your `Makefile` will might not work anymore, since `Makefile` uses tabs instead of spaces for indentation.
 
-1. Install `TeX Live`, `Git`, `Makefile`.
+1. Install `TeX Live` (including `latexmk`, `latexindent.pl` and `chktex`), `Git`, `Makefile`.
 2. Downloads or clone this repository.
 3. Run `make updatecls` to make the `.cls` file available.
 4. At the project root, run `make` to compile the whole document.
@@ -64,6 +65,7 @@ But if you want to change something to fit your needs, you can tweak the followi
 -   `custom.cls`
 -   `indentconfig.yaml`
 -   `.chktexrc`
+-   `.latexmkrc`
 -   `Makefile`:
     -   Create your own rules.
     -   Remove rules.
