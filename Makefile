@@ -51,19 +51,3 @@ updatecls:
 # remove auxiliary files that generated while latexmk running
 %.cleanaux: %.tex
 	latexmk -C -outdir=$(shell dirname $(MAKECMDGOALS)) $<
-
-# to build chapter0, run make chapter0 -B
-# to build section1 of chapter1, run make chapter1/section1 -B
-# you might need to run make clean first
-%:
-	if [ -d $(MAKECMDGOALS) ]; then \
-		latexmk $(LATEXMK_OPTIONS) -outdir=$(MAKECMDGOALS) "$(lastword $(subst /, ,$(realpath $(MAKECMDGOALS)))).tex"; \
-	fi
-
-	if [ -f $(MAKECMDGOALS) ]; then \
-		latexmk $(LATEXMK_OPTIONS) -outdir=$(shell dirname $(MAKECMDGOALS)) $(MAKECMDGOALS); \
-	fi
-
-	if [ -f "$(MAKECMDGOALS).tex" ]; then \
-		latexmk $(LATEXMK_OPTIONS) -outdir=$(shell dirname $(MAKECMDGOALS)) "$(MAKECMDGOALS).tex"; \
-	fi

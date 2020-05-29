@@ -94,20 +94,6 @@ The `Makefile` file, in this repository, provides the following targets:
     -   `make chapter0/chapter0.clean` will remove auxiliary and output files of `chapter0/chapter0.tex`.
 -   `%.cleanaux`:
     -   `make chapter0/chapter0.cleanaux` will remove auxiliary of `chapter0/chapter0.tex`.
--   `%` (pattern rule):
-    -   For those who are not so familiar with `Makefile`: you might consider `%` as a wildcard for any string. More specific, if you run `make <target>`, where `<target>` doesn't match `all`, `clean`, `formatall`,... it will use this pattern rule `%`.
-    -   In this case, the pattern rule is used to compile subfiles of the document. I have splitted the whole document into chapters, chapters to smaller sections and put them in the corresponding directories.
-    -   This rule depends **heavily** on how I organize the project structure and the packages I use (`standalone`, `import`). See **The Ideas Behind**(next) to understand the idea.
-    -   For examples:
-    -   To compile `chapter0`, run:
-    ```shell
-    make chapter0 -B
-    ```
-    -   `make` won't run if the target name is identical to any directory path or file name so `-B` is required.
-    -   To compile `section2` of `chapter1`, run:
-    ```shell
-    make chapter1/section2 -B
-    ```
 
 ## The Ideas Behind
 
