@@ -154,9 +154,13 @@ acs-*.bib
 *.maf
 *.mlf
 *.mlt
+*.mtc
 *.mtc[0-9]*
+*.slf
 *.slf[0-9]*
+*.slt
 *.slt[0-9]*
+*.stc
 *.stc[0-9]*
 
 # minted
