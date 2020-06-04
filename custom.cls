@@ -29,7 +29,7 @@
 \titleformat{\chapter}[display]{\flushright\bf\huge\color{red}}{\chaptertitlename\ \thechapter}{10pt}{}
 \titleformat{\section}{\bf\Large\color{red}}{\thesection}{10pt}{}
 \titleformat{\subsection}{\bf\large\color{red}}{\thesubsection}{10pt}{}
-\titleformat{\subsubsection}{\bf\large\color{red}}{\thesubsubsection}{10pt}{}
+\titleformat{\subsubsection}{\bf\normalsize\color{red}}{\thesubsubsection}{10pt}{}
 
 \captionsetup{labelfont={bf},labelsep=period}
 \counterwithin{figure}{chapter}

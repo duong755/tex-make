@@ -5,7 +5,6 @@ LATEXMK_OPTIONS := -synctex=1 $\
 				   -shell-escape $\
 				   -halt-on-error $\
 				   -pdf
-LATEXMK_PREVIEW := $(LATEXMK_OPTIONS) -pvc
 CHKTEX_OPTIONS := --localrc ./.chktexrc $\
 				  --headererr $\
 				  --inputfiles $\
@@ -32,14 +31,12 @@ chktex:
 # all files and directories should not contain any white space in their names
 formatall:
 	for file in $(shell find . -regex ".*\.\(tex\|cls\|sty\)\$$"); do \
-		echo "\n\n"; \
-		echo "Formatting $$file ...\n"; \
+		echo "\nFormatting $$file ...\n"; \
 		latexindent $(LATEXINDENT_OPTIONS) $$file; \
 	done
 
 options:
 	@echo $(LATEXMK_OPTIONS)
-	@echo $(LATEXMK_PREVIEW)
 	@echo $(LATEXINDENT_OPTIONS)
 
 updatecls:
@@ -47,12 +44,15 @@ updatecls:
 	cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class
 
 %.pdf: %.tex
-	latexmk $(LATEXMK_PREVIEW) -outdir=$(shell dirname $(MAKECMDGOALS)) $<
+	latexmk $(LATEXMK_OPTIONS) -pvc -outdir=$(shell dirname $<) $<
+
+%.pdf.o: %.tex
+	latexmk $(LATEXMK_OPTIONS) -outdir=$(shell dirname $<) $<
 
 # remove auxiliary files and pdf, dvi files
 %.clean: %.tex
-	latexmk -C -outdir=$(shell dirname $(MAKECMDGOALS)) $<
+	latexmk -C -outdir=$(shell dirname $<) $<
 
 # remove auxiliary files that generated while latexmk running
 %.cleanaux: %.tex
-	latexmk -c -outdir=$(shell dirname $(MAKECMDGOALS)) $<
+	latexmk -c -outdir=$(shell dirname $<) $<
