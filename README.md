@@ -26,7 +26,7 @@ If you would like to contribute or find out the essential, the idea of this proj
 
 ## Prerequisites
 
--   [`TeX Live`](http://tug.org/texlive/acquire-netinstall.html) (`ChkTeX` and `latexindent.pl` are available as part of `TeX Live`).
+-   [`TeX Live`](http://tug.org/texlive/acquire-netinstall.html) (`ChkTeX` and `latexindent.pl` are available as part of `TeX Live`) and `latexmk`.
 -   [`Git`](https://git-scm.com).
 -   [`Perl programming language`](https://www.perl.org/get.html).
 
