@@ -88,8 +88,10 @@ The `Makefile` file, in this repository, provides the following targets:
     -   This formats your source code by using `latexindent.pl`, which is configurable with `indentconfig.yaml` file. Just like `chktex`, you should format your code to ensure consistency.
 -   `updatecls`:
     -   The template repository provides its own `.cls` file. In order to use this `.cls` anywhere, this target copies it to an appropriate place.
--   `%.pdf`:
-    -   `make chapter0/chapter0.pdf` will build `.pdf` from `chapter0/chapter0.tex`. This enables preview.
+-   `%.pdf`, `%.pdf.o`:
+    -   `make chapter0/chapter0.pdf` will build `.pdf` from `chapter0/chapter0.tex`. This enables preview and the `.pdf` will be deleted after preview end. `make chapter0/chapter0.pdf.o` will build `.pdf` without preview.
+-   `%.dvi`, `%.dvi.o`; `%.ps`, `%.ps.o`:
+    -   Similar to `%.pdf`, `%.pdf.o`.
 -   `%.clean`:
     -   `make chapter0/chapter0.clean` will remove auxiliary and output files of `chapter0/chapter0.tex`.
 -   `%.cleanaux`:
