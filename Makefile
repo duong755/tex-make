@@ -3,8 +3,7 @@ LATEXMK_OPTIONS := -synctex=1 $\
 				   -recorder $\
 				   -file-line-error $\
 				   -shell-escape $\
-				   -halt-on-error $\
-				   -pdf
+				   -halt-on-error
 CHKTEX_OPTIONS := --localrc ./.chktexrc $\
 				  --headererr $\
 				  --inputfiles $\
@@ -44,10 +43,22 @@ updatecls:
 	cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class
 
 %.pdf: %.tex
-	latexmk $(LATEXMK_OPTIONS) -pvc -outdir=$(shell dirname $<) $<
+	latexmk $(LATEXMK_OPTIONS) -pdf -pvc -outdir=$(shell dirname $<) $<
+
+%.dvi: %.tex
+	latexmk $(LATEXMK_OPTIONS) -dvi -pvc -outdir=$(shell dirname $<) $<
+
+%.ps: %.tex
+	latexmk $(LATEXMK_OPTIONS) -ps -pvc -outdir=$(shell dirname $<) $<
 
 %.pdf.o: %.tex
 	latexmk $(LATEXMK_OPTIONS) -outdir=$(shell dirname $<) $<
+
+%.dvi.o: %.tex
+	latexmk $(LATEXMK_OPTIONS) -dvi -outdir=$(shell dirname $<) $<
+
+%.ps.o: %.tex
+	latexmk $(LATEXMK_OPTIONS) -ps -outdir=$(shell dirname $<) $<
 
 # remove auxiliary files and pdf, dvi files
 %.clean: %.tex
