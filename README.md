@@ -1,4 +1,4 @@
-# ![](https://latex.codecogs.com/gif.latex?%5CTeX) make
+# TeX Make
 
 ## Thanks
 
@@ -59,6 +59,8 @@ For Windows users, `Git` must be installed with `Git bash`, since all scripts us
 11. Run `make path/to/file.cleanaux` to remove auxiliary files of `path/to/file.tex`.
 12. Run `make path/to/file.clean` to remove auxiliary and output files of `path/to/file.tex`.
 13. Customize (next).
+
+For more features (targets), see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Customize
 
