@@ -31,10 +31,6 @@ cleanaux:
 cleanbak:
 	rm -f $(shell find . -regex ".*\.\(bak\d*\|log\)$$")
 
-# remove untracked and ignored files
-cleangit:
-	git clean -f -d -X
-
 chktex:
 	chktex $(CHKTEX_OPTIONS) $(shell find . -name "*.tex")
 
