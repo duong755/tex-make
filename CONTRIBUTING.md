@@ -98,6 +98,8 @@ The `Makefile` file, in this repository, provides the following targets:
     -   `make chapter0/chapter0.clean` will remove auxiliary and output files of `chapter0/chapter0.tex`.
 -   `%.cleanaux`:
     -   `make chapter0/chapter0.cleanaux` will remove auxiliary of `chapter0/chapter0.tex`.
+-   `%.format`:
+    -   `make chapter0/chapter0.format` will format `chapter0/chapter0.tex`.
 
 ## The Ideas Behind
 
@@ -132,10 +134,3 @@ So that's why I have chosen `standalone` and `import` packages. It is the most f
 But of course, this solution has caveat - _performance_. With a quite large number of subfiles, you have to specify the variable `$max_repeat` (which is set default to 5) in `.latexmkrc` - This is up to you.
 
 But for now, I don't mind it. Maybe someday, the project will serve both solution: `\input` and `standalone`, `\input` for the whole document, `standalone` for parts of it.
-
-### Chapters, Sections and so on
-
-As you have seen the codebase structure, I put the content of the chapters in `chapter{number}` directories.
-And each directories has its own "entry file", which might import smaller subfiles.
-
-At first, I wanted the name of the entry file will always be `main.tex`, and it is ok, and the recipe in `Makefile` can be simpler. But I don't want get confused between various of entry files with the same name so I decided that the entry file and its directory will have the same name.

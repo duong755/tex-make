@@ -75,3 +75,7 @@ updatecls:
 # remove auxiliary files that generated while latexmk running
 %.cleanaux: %.tex
 	latexmk -c -outdir=$(shell dirname $<) $<
+
+# format specific TeX file
+%.format: %.tex
+	latexindent $(LATEXINDENT_OPTIONS) $<;
