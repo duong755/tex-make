@@ -9,9 +9,7 @@
 \RequirePackage{fancyhdr}
 \RequirePackage{xcolor}
 \RequirePackage{titlesec}
-\RequirePackage{indentfirst}
 \RequirePackage{chngcntr}
-\RequirePackage{caption}
 \RequirePackage{subcaption}
 \RequirePackage{booktabs}
 
@@ -30,7 +28,3 @@
 \titleformat{\section}{\bf\Large\color{red}}{\thesection}{10pt}{}
 \titleformat{\subsection}{\bf\large\color{red}}{\thesubsection}{10pt}{}
 \titleformat{\subsubsection}{\bf\normalsize\color{red}}{\thesubsubsection}{10pt}{}
-
-\captionsetup{labelfont={bf},labelsep=period}
-\counterwithin{figure}{chapter}
-\counterwithin{table}{chapter}
