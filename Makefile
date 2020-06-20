@@ -64,14 +64,6 @@ updatecls:
 %.ps.o: %.tex
 	latexmk $(LATEXMK_OPTIONS) -ps -outdir=$(shell dirname $<) $<
 
-# remove auxiliary files and pdf, dvi files
-%.clean: %.tex
-	latexmk -C -outdir=$(shell dirname $<) $<
-
-# remove auxiliary files that generated while latexmk running
-%.cleanaux: %.tex
-	latexmk -c -outdir=$(shell dirname $<) $<
-
 # format specific TeX file
 %.format: %.tex
 	latexindent $(LATEXINDENT_OPTIONS) $<;

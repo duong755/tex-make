@@ -68,6 +68,94 @@ switch ($Target) {
         Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
     }
     Default {
-        Write-Output "make: *** No rule to make target '$Target'.  Stop."
+        $filePattern = [System.Text.RegularExpressions.Regex]"\.(pdf(\.o)?|dvi(\.o)?|ps(\.o)?|format)$"
+
+        $texFile = $filePattern.Replace($Target, ".tex")
+
+        if ((Test-Path $texFile -PathType Leaf) -And ($filePattern.IsMatch($Target))) {
+            $absPath = Resolve-Path $texFile
+            $outdir = Split-Path $absPath
+            Write-Output $outdir
+            switch -Regex ($Target) {
+                "\.pdf$" {
+                    latexmk -synctex=1 `
+                        -interaction=nonstopmode `
+                        -recorder `
+                        -file-line-error `
+                        -shell-escape `
+                        -halt-on-error `
+                        -pdf `
+                        -pvc `
+                        -outdir="$outdir" `
+                        $texFile
+                }
+                "\.dvi$" {
+                    latexmk -synctex=1 `
+                        -interaction=nonstopmode `
+                        -recorder `
+                        -file-line-error `
+                        -shell-escape `
+                        -halt-on-error `
+                        -dvi `
+                        -pvc `
+                        -outdir="$outdir" `
+                        $texFile
+                }
+                "\.ps$" {
+                    latexmk -synctex=1 `
+                        -interaction=nonstopmode `
+                        -recorder `
+                        -file-line-error `
+                        -shell-escape `
+                        -halt-on-error `
+                        -ps `
+                        -pvc `
+                        -outdir="$outdir" `
+                        $texFile
+                }
+                "\.pdf\.o$" {
+                    latexmk -synctex=1 `
+                        -interaction=nonstopmode `
+                        -recorder `
+                        -file-line-error `
+                        -shell-escape `
+                        -halt-on-error `
+                        -pdf `
+                        -outdir="$outdir" `
+                        $texFile
+                }
+                "\.dvi\.o$" {
+                    latexmk -synctex=1 `
+                        -interaction=nonstopmode `
+                        -recorder `
+                        -file-line-error `
+                        -shell-escape `
+                        -halt-on-error `
+                        -dvi `
+                        -outdir="$outdir" `
+                        $texFile
+                }
+                "\.ps\.o$" {
+                    latexmk -synctex=1 `
+                        -interaction=nonstopmode `
+                        -recorder `
+                        -file-line-error `
+                        -shell-escape `
+                        -halt-on-error `
+                        -ps `
+                        -outdir="$outdir" `
+                        $texFile
+                }
+                "\.format$" {
+                    latexindent --local=indentconfig.yaml `
+                        --overwrite `
+                        $texFile
+                }
+            }
+        }
+        else {
+            Write-Output "make: *** No rule to make target '$Target'.  Stop."
+        }
+
     }
 }

@@ -94,10 +94,6 @@ The `Makefile` file, in this repository, provides the following targets:
     -   `make chapter0/chapter0.pdf` will build `.pdf` from `chapter0/chapter0.tex`. This enables preview and the `.pdf` will be deleted after preview end. `make chapter0/chapter0.pdf.o` will build `.pdf` without preview.
 -   `%.dvi`, `%.dvi.o`; `%.ps`, `%.ps.o`:
     -   Similar to `%.pdf`, `%.pdf.o`.
--   `%.clean`:
-    -   `make chapter0/chapter0.clean` will remove auxiliary and output files of `chapter0/chapter0.tex`.
--   `%.cleanaux`:
-    -   `make chapter0/chapter0.cleanaux` will remove auxiliary of `chapter0/chapter0.tex`.
 -   `%.format`:
     -   `make chapter0/chapter0.format` will format `chapter0/chapter0.tex`.
 
