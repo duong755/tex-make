@@ -16,8 +16,6 @@ CHKTEX_OPTIONS=--localrc ./.chktexrc $\
 LATEXINDENT_OPTIONS=--local=indentconfig.yaml $\
 					--overwrite
 
-abc:
-	$(call cp_latexmkrc, ".")
 
 all:
 	latexmk $(LATEXMK_OPTIONS) -pdf main.tex
