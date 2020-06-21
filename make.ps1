@@ -9,6 +9,9 @@ param (
     $Target
 )
 
+$latexmkrc = Resolve-Path ./.latexmkrc
+$currentLocation = (Get-Location).Path
+
 switch ($Target) {
     "" {
         latexmk -synctex=1 `
@@ -74,8 +77,12 @@ switch ($Target) {
 
         if ((Test-Path $texFile -PathType Leaf) -And ($filePattern.IsMatch($Target))) {
             $absPath = Resolve-Path $texFile
+            $fileName = Split-Path $absPath -Leaf
             $outdir = Split-Path $absPath
-            Write-Output $outdir
+
+            Copy-Item $latexmkrc $outdir
+            Set-Location $outdir
+
             switch -Regex ($Target) {
                 "\.pdf$" {
                     latexmk -synctex=1 `
@@ -86,8 +93,7 @@ switch ($Target) {
                         -halt-on-error `
                         -pdf `
                         -pvc `
-                        -outdir="$outdir" `
-                        $texFile
+                        $fileName
                 }
                 "\.dvi$" {
                     latexmk -synctex=1 `
@@ -98,8 +104,7 @@ switch ($Target) {
                         -halt-on-error `
                         -dvi `
                         -pvc `
-                        -outdir="$outdir" `
-                        $texFile
+                        $fileName
                 }
                 "\.ps$" {
                     latexmk -synctex=1 `
@@ -110,8 +115,7 @@ switch ($Target) {
                         -halt-on-error `
                         -ps `
                         -pvc `
-                        -outdir="$outdir" `
-                        $texFile
+                        $fileName
                 }
                 "\.pdf\.o$" {
                     latexmk -synctex=1 `
@@ -121,8 +125,7 @@ switch ($Target) {
                         -shell-escape `
                         -halt-on-error `
                         -pdf `
-                        -outdir="$outdir" `
-                        $texFile
+                        $fileName
                 }
                 "\.dvi\.o$" {
                     latexmk -synctex=1 `
@@ -132,8 +135,7 @@ switch ($Target) {
                         -shell-escape `
                         -halt-on-error `
                         -dvi `
-                        -outdir="$outdir" `
-                        $texFile
+                        $fileName
                 }
                 "\.ps\.o$" {
                     latexmk -synctex=1 `
@@ -143,15 +145,18 @@ switch ($Target) {
                         -shell-escape `
                         -halt-on-error `
                         -ps `
-                        -outdir="$outdir" `
-                        $texFile
+                        $fileName
                 }
                 "\.format$" {
                     latexindent --local=indentconfig.yaml `
                         --overwrite `
                         $texFile
                 }
+                Default {
+                    Write-Output "make: *** No rule to make target '$Target'.  Stop."
+                }
             }
+            Set-Location $currentLocation
         }
         else {
             Write-Output "make: *** No rule to make target '$Target'.  Stop."

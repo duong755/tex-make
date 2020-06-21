@@ -286,3 +286,7 @@ TSWLatexianTemp*
 *.pdf
 *.out.ps
 *.bak[0-9]*
+!.latexmkrc
+!latexmkrc
+**/.latexmkrc
+**/latexmkrc
