@@ -16,7 +16,8 @@ CHKTEX_OPTIONS=--localrc ./.chktexrc $\
 LATEXINDENT_OPTIONS=--local=indentconfig.yaml $\
 					--overwrite
 
-LATEXMKRC=$(realpath .latexmkrc)
+abc:
+	$(call cp_latexmkrc, ".")
 
 all:
 	latexmk $(LATEXMK_OPTIONS) -pdf main.tex
@@ -53,27 +54,27 @@ updatecls:
 	cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class
 
 %.pdf: %.tex
-	cp $(LATEXMKRC) $(shell dirname $<)
+	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
 	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -pdf -pvc $(shell basename $<)
 
 %.dvi: %.tex
-	cp $(LATEXMKRC) $(shell dirname $<)
+	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
 	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -dvi -pvc $(shell basename $<)
 
 %.ps: %.tex
-	cp $(LATEXMKRC) $(shell dirname $<)
+	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
 	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -ps -pvc $(shell basename $<)
 
 %.pdf.o: %.tex
-	cp $(LATEXMKRC) $(shell dirname $<)
+	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
 	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -pdf $(shell basename $<)
 
 %.dvi.o: %.tex
-	cp $(LATEXMKRC) $(shell dirname $<)
+	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
 	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -dvi $(shell basename $<)
 
 %.ps.o: %.tex
-	cp $(LATEXMKRC) $(shell dirname $<)
+	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
 	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -ps $(shell basename $<)
 
 # format specific TeX file

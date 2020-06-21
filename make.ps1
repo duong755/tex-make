@@ -80,7 +80,9 @@ switch ($Target) {
             $fileName = Split-Path $absPath -Leaf
             $outdir = Split-Path $absPath
 
-            Copy-Item $latexmkrc $outdir
+            if ($currentLocation -ne $outdir) {
+                Copy-Item $latexmkrc $outdir
+            }
             Set-Location $outdir
 
             switch -Regex ($Target) {
