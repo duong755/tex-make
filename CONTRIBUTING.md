@@ -28,7 +28,7 @@ Before submitting your pull request, make sure that the following has been done:
 ### Contribution Prerequisites
 
 -   The latest version of `TeX Live`.
--   GNUmake.
+-   GNUmake and PowerShell.
 -   Git and experience with it.
 
 ## Codebase structure
@@ -58,6 +58,7 @@ Before submitting your pull request, make sure that the following has been done:
 ├── LICENSE
 ├── main.tex
 ├── Makefile
+├── make.ps1
 └── README.md
 ```
 
