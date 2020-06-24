@@ -23,6 +23,7 @@ switch ($Target) {
             -shell-escape `
             -halt-on-error `
             -pdf `
+            -r $latexmkrc `
             ./main.tex
     }
     "all" {
@@ -33,6 +34,7 @@ switch ($Target) {
             -shell-escape `
             -halt-on-error `
             -pdf `
+            -r $latexmkrc `
             ./main.tex
     }
     "clean" {
@@ -78,13 +80,9 @@ switch ($Target) {
         $texFile = $filePattern.Replace($Target, ".tex")
 
         if ((Test-Path $texFile -PathType Leaf) -And ($filePattern.IsMatch($Target))) {
-            $absPath = Resolve-Path $texFile
-            $fileName = Split-Path $absPath -Leaf
-            $outdir = Split-Path $absPath
+            $texFileAbsPath = Resolve-Path $texFile
+            $outdir = Split-Path $texFileAbsPath
 
-            if ($rootDir -ne $outdir) {
-                Copy-Item $latexmkrc $outdir
-            }
             Set-Location $outdir
 
             switch -Regex ($Target) {
@@ -97,7 +95,8 @@ switch ($Target) {
                         -halt-on-error `
                         -pdf `
                         -pvc `
-                        $fileName
+                        -r $latexmkrc `
+                        $texFileAbsPath
                 }
                 "\.dvi$" {
                     latexmk -synctex=1 `
@@ -108,7 +107,8 @@ switch ($Target) {
                         -halt-on-error `
                         -dvi `
                         -pvc `
-                        $fileName
+                        -r $latexmkrc `
+                        $texFileAbsPath
                 }
                 "\.ps$" {
                     latexmk -synctex=1 `
@@ -119,7 +119,8 @@ switch ($Target) {
                         -halt-on-error `
                         -ps `
                         -pvc `
-                        $fileName
+                        -r $latexmkrc `
+                        $texFileAbsPath
                 }
                 "\.pdf\.o$" {
                     latexmk -synctex=1 `
@@ -129,7 +130,8 @@ switch ($Target) {
                         -shell-escape `
                         -halt-on-error `
                         -pdf `
-                        $fileName
+                        -r $latexmkrc `
+                        $texFileAbsPath
                 }
                 "\.dvi\.o$" {
                     latexmk -synctex=1 `
@@ -139,7 +141,8 @@ switch ($Target) {
                         -shell-escape `
                         -halt-on-error `
                         -dvi `
-                        $fileName
+                        -r $latexmkrc `
+                        $texFileAbsPath
                 }
                 "\.ps\.o$" {
                     latexmk -synctex=1 `
@@ -149,13 +152,14 @@ switch ($Target) {
                         -shell-escape `
                         -halt-on-error `
                         -ps `
-                        $fileName
+                        -r $latexmkrc `
+                        $texFileAbsPath
                 }
                 "\.format$" {
                     Set-Location $rootDir
                     latexindent --local=$indentconfig `
                         --overwrite `
-                        $texFile
+                        $texFileAbsPath
                 }
                 "\.lint$" {
                     Set-Location $rootDir
@@ -164,7 +168,7 @@ switch ($Target) {
                         --inputfiles `
                         --format=1 `
                         --verbosity=2 `
-                        $texFile
+                        $texFileAbsPath
                 }
                 Default {
                     Write-Output "make: *** No rule to make target '$Target'.  Stop."

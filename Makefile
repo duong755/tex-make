@@ -5,7 +5,8 @@ LATEXMK_OPTIONS=-synctex=1 $\
 				-recorder $\
 				-file-line-error $\
 				-shell-escape $\
-				-halt-on-error
+				-halt-on-error $\
+				-r $(LATEXMKRC)
 
 CHKTEX_OPTIONS=--localrc ./.chktexrc $\
 			   --headererr $\
@@ -53,28 +54,22 @@ updatecls:
 	cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class
 
 %.pdf: %.tex
-	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
-	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -pdf -pvc $(shell basename $<)
+	latexmk $(LATEXMK_OPTIONS) -pdf -pvc -outdir=$(shell dirname $<) $(shell basename $<)
 
 %.dvi: %.tex
-	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
-	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -dvi -pvc $(shell basename $<)
+	latexmk $(LATEXMK_OPTIONS) -dvi -pvc -outdir=$(shell dirname $<) $(shell basename $<)
 
 %.ps: %.tex
-	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
-	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -ps -pvc $(shell basename $<)
+	latexmk $(LATEXMK_OPTIONS) -ps -pvc -outdir=$(shell dirname $<) $(shell basename $<)
 
 %.pdf.o: %.tex
-	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
-	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -pdf $(shell basename $<)
+	latexmk $(LATEXMK_OPTIONS) -pdf -outdir=$(shell dirname $<) $(shell basename $<)
 
 %.dvi.o: %.tex
-	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
-	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -dvi $(shell basename $<)
+	latexmk $(LATEXMK_OPTIONS) -dvi -outdir=$(shell dirname $<) $(shell basename $<)
 
 %.ps.o: %.tex
-	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
-	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -ps $(shell basename $<)
+	latexmk $(LATEXMK_OPTIONS) -ps -outdir=$(shell dirname $<) $(shell basename $<)
 
 # lint specific TeX file
 %.lint: %.tex
