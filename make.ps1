@@ -10,7 +10,9 @@ param (
 )
 
 $latexmkrc = Resolve-Path ./.latexmkrc
-$currentLocation = (Get-Location).Path
+$chktexrc = Resolve-Path ./.chktexrc
+$indentconfig = Resolve-Path ./indentconfig.yaml
+$rootDir = (Get-Location).Path
 
 switch ($Target) {
     "" {
@@ -51,13 +53,13 @@ switch ($Target) {
             Remove-Item -Force $_.FullName
         }
     }
-    "chktex" {
+    "lint" {
         $files = $(Get-ChildItem -Recurse -File)
         $files | Where-Object -FilterScript { $_.Extension -eq ".tex" } | ForEach-Object -Process {
             chktex --localrc "./.chktexrc" --headererr --inputfiles --format=1 --verbosity=2 $_.FullName
         }
     }
-    "formatall" {
+    "format" {
         $files = $(Get-ChildItem -Recurse -File)
         $files | Where-Object -FilterScript { $_.Extension -match "\.(tex|cls|sty)$" } | ForEach-Object -Process {
             latexindent --local="./indentconfig.yaml" --overwrite $_.FullName
@@ -71,7 +73,7 @@ switch ($Target) {
         Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
     }
     Default {
-        $filePattern = [System.Text.RegularExpressions.Regex]"\.(pdf(\.o)?|dvi(\.o)?|ps(\.o)?|format)$"
+        $filePattern = [System.Text.RegularExpressions.Regex]"\.(pdf(\.o)?|dvi(\.o)?|ps(\.o)?|format|lint)$"
 
         $texFile = $filePattern.Replace($Target, ".tex")
 
@@ -80,7 +82,7 @@ switch ($Target) {
             $fileName = Split-Path $absPath -Leaf
             $outdir = Split-Path $absPath
 
-            if ($currentLocation -ne $outdir) {
+            if ($rootDir -ne $outdir) {
                 Copy-Item $latexmkrc $outdir
             }
             Set-Location $outdir
@@ -150,15 +152,25 @@ switch ($Target) {
                         $fileName
                 }
                 "\.format$" {
-                    latexindent --local=indentconfig.yaml `
+                    Set-Location $rootDir
+                    latexindent --local=$indentconfig `
                         --overwrite `
+                        $texFile
+                }
+                "\.lint$" {
+                    Set-Location $rootDir
+                    chktex --localrc $chktexrc `
+                        --headererr `
+                        --inputfiles `
+                        --format=1 `
+                        --verbosity=2 `
                         $texFile
                 }
                 Default {
                     Write-Output "make: *** No rule to make target '$Target'.  Stop."
                 }
             }
-            Set-Location $currentLocation
+            Set-Location $rootDir
         }
         else {
             Write-Output "make: *** No rule to make target '$Target'.  Stop."
