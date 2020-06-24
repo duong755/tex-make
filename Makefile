@@ -36,12 +36,13 @@ cleanaux:
 cleanbak:
 	rm -f $(shell find . -regex ".*\.\(bak\d*\|log\)$$")
 
-chktex:
+# lint all tex files
+lint:
 	chktex $(CHKTEX_OPTIONS) $(shell find . -name "*.tex")
 
-# format tex, cls, sty files
+# format all tex, cls, sty files
 # all files and directories should not contain any white space in their names
-formatall:
+format:
 	for file in $(shell find . -regex ".*\.\(tex\|cls\|sty\)\$$"); do \
 		echo "\nFormatting $$file ...\n"; \
 		latexindent $(LATEXINDENT_OPTIONS) $$file; \
@@ -74,6 +75,10 @@ updatecls:
 %.ps.o: %.tex
 	if [ "$(shell dirname $(LATEXMKRC))" != "$(shell dirname $(shell realpath $<))" ]; then cp $(LATEXMKRC) $(shell dirname $<) ; fi
 	cd $(shell dirname $<) && latexmk $(LATEXMK_OPTIONS) -ps $(shell basename $<)
+
+# lint specific TeX file
+%.lint: %.tex
+	chktex $(CHKTEX_OPTIONS) $<
 
 # format specific TeX file
 %.format: %.tex
