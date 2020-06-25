@@ -12,7 +12,6 @@ param (
 $latexmkrc = Resolve-Path ./.latexmkrc
 $chktexrc = Resolve-Path ./.chktexrc
 $indentconfig = Resolve-Path ./indentconfig.yaml
-$rootDir = (Get-Location).Path
 
 switch ($Target) {
     "" {
@@ -83,8 +82,6 @@ switch ($Target) {
             $texFileAbsPath = Resolve-Path $texFile
             $outdir = Split-Path $texFileAbsPath
 
-            Set-Location $outdir
-
             switch -Regex ($Target) {
                 "\.pdf$" {
                     latexmk -synctex=1 `
@@ -96,7 +93,8 @@ switch ($Target) {
                         -pdf `
                         -pvc `
                         -r $latexmkrc `
-                        $texFileAbsPath
+                        -outdir="$outdir"
+                    $texFileAbsPath
                 }
                 "\.dvi$" {
                     latexmk -synctex=1 `
@@ -108,7 +106,8 @@ switch ($Target) {
                         -dvi `
                         -pvc `
                         -r $latexmkrc `
-                        $texFileAbsPath
+                        -outdir="$outdir"
+                    $texFileAbsPath
                 }
                 "\.ps$" {
                     latexmk -synctex=1 `
@@ -120,7 +119,8 @@ switch ($Target) {
                         -ps `
                         -pvc `
                         -r $latexmkrc `
-                        $texFileAbsPath
+                        -outdir="$outdir"
+                    $texFileAbsPath
                 }
                 "\.pdf\.o$" {
                     latexmk -synctex=1 `
@@ -130,8 +130,10 @@ switch ($Target) {
                         -shell-escape `
                         -halt-on-error `
                         -pdf `
+                        -outdir="$outdir" `
                         -r $latexmkrc `
-                        $texFileAbsPath
+                        -outdir="$outdir"
+                    $texFileAbsPath
                 }
                 "\.dvi\.o$" {
                     latexmk -synctex=1 `
@@ -142,7 +144,8 @@ switch ($Target) {
                         -halt-on-error `
                         -dvi `
                         -r $latexmkrc `
-                        $texFileAbsPath
+                        -outdir="$outdir"
+                    $texFileAbsPath
                 }
                 "\.ps\.o$" {
                     latexmk -synctex=1 `
@@ -153,16 +156,15 @@ switch ($Target) {
                         -halt-on-error `
                         -ps `
                         -r $latexmkrc `
-                        $texFileAbsPath
+                        -outdir="$outdir"
+                    $texFileAbsPath
                 }
                 "\.format$" {
-                    Set-Location $rootDir
                     latexindent --local=$indentconfig `
                         --overwrite `
                         $texFileAbsPath
                 }
                 "\.lint$" {
-                    Set-Location $rootDir
                     chktex --localrc $chktexrc `
                         --headererr `
                         --inputfiles `
@@ -174,11 +176,9 @@ switch ($Target) {
                     Write-Output "make: *** No rule to make target '$Target'.  Stop."
                 }
             }
-            Set-Location $rootDir
         }
         else {
             Write-Output "make: *** No rule to make target '$Target'.  Stop."
         }
-
     }
 }
