@@ -44,11 +44,10 @@ updatecls:
 %.dvi: %.tex
 	lualatex $(LUALATEX_OPTIONS) --output-format=dvi --output-directory=$(shell dirname $<) $(shell basename $<)
 
-
 # lint specific TeX file
 %.lint: %.tex
 	chktex $(CHKTEX_OPTIONS) $<
 
 # format specific TeX file
 %.format: %.tex
-	latexindent $(LATEXINDENT_OPTIONS) $<;
+	latexindent $(LATEXINDENT_OPTIONS) $<

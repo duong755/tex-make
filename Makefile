@@ -22,13 +22,13 @@ all:
 	latexmk $(LATEXMK_OPTIONS) -pdf main.tex
 
 clean:
-	for file in $(shell find . -regex ".*\.\(tex\)\$$"); do \
+	for file in $(shell find . -name "*.tex"); do \
 		DIR=`dirname $$file`; \
 		latexmk -C -outdir=$$DIR $$file; \
 	done
 
 cleanaux:
-	for file in $(shell find . -regex ".*\.\(tex\)\$$"); do \
+	for file in $(shell find . -name "*.tex"); do \
 		DIR=`dirname $$file`; \
 		latexmk -c -outdir=$$DIR $$file; \
 	done
@@ -77,4 +77,4 @@ updatecls:
 
 # format specific TeX file
 %.format: %.tex
-	latexindent $(LATEXINDENT_OPTIONS) $<;
+	latexindent $(LATEXINDENT_OPTIONS) $<

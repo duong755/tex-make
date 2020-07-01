@@ -47,4 +47,4 @@ updatecls:
 
 # format specific TeX file
 %.format: %.tex
-	latexindent $(LATEXINDENT_OPTIONS) $<;
+	latexindent $(LATEXINDENT_OPTIONS) $<
