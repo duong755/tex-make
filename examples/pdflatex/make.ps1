@@ -14,6 +14,12 @@ $indentconfig = Resolve-Path ./indentconfig.yaml
 
 switch ($Target) {
     "" {
+        $texmfhome = kpsewhich -var-value=TEXMFHOME
+        if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
+            New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
+        }
+        Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+
         pdflatex -synctex=1 `
             -interaction=nonstopmode `
             -recorder `
@@ -23,6 +29,12 @@ switch ($Target) {
             ./main.tex
     }
     "all" {
+        $texmfhome = kpsewhich -var-value=TEXMFHOME
+        if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
+            New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
+        }
+        Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+
         pdflatex -synctex=1 `
             -interaction=nonstopmode `
             -recorder `
@@ -64,6 +76,12 @@ switch ($Target) {
         if ((Test-Path $texFile -PathType Leaf) -And ($filePattern.IsMatch($Target))) {
             $texFileAbsPath = Resolve-Path $texFile
             $outdir = Split-Path $texFileAbsPath
+
+            $texmfhome = kpsewhich -var-value=TEXMFHOME
+            if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
+                New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
+            }
+            Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
 
             switch -Regex ($Target) {
                 "\.pdf$" {
