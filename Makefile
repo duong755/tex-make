@@ -50,8 +50,10 @@ format:
 	done
 
 updatecls:
-	mkdir -p $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class
-	cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class
+	if [ ! -z $(shell find . -maxdepth 1 -name "*.cls") ]; then \
+		mkdir -p $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
+		cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
+	fi
 
 %.pdf: %.tex updatecls
 	latexmk $(LATEXMK_OPTIONS) -pdf -pvc -outdir=$(shell dirname $<) $(shell basename $<)

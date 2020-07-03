@@ -18,8 +18,9 @@ switch ($Target) {
         if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
             New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
         }
-        Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
-
+        if (Get-ChildItem "*.cls") {
+          Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+        }
         pdflatex -synctex=1 `
             -interaction=nonstopmode `
             -recorder `
@@ -33,8 +34,9 @@ switch ($Target) {
         if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
             New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
         }
-        Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
-
+        if (Get-ChildItem "*.cls") {
+            Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+        }
         pdflatex -synctex=1 `
             -interaction=nonstopmode `
             -recorder `
@@ -66,7 +68,9 @@ switch ($Target) {
         if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
             New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
         }
-        Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+        if (Get-ChildItem "*.cls") {
+            Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+        }
     }
     Default {
         $filePattern = [System.Text.RegularExpressions.Regex]"\.(pdf(\.o)?|dvi(\.o)?|ps(\.o)?|format|lint)$"
@@ -81,7 +85,9 @@ switch ($Target) {
             if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
                 New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
             }
-            Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+            if (Get-ChildItem "*.cls") {
+               Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+            }
 
             switch -Regex ($Target) {
                 "\.pdf$" {
