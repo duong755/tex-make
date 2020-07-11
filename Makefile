@@ -1,4 +1,4 @@
-LATEXMKRC=$(realpath .latexmkrc)
+LATEXMKRC=$(realpath latexmkrc)
 
 LATEXMK_OPTIONS=-synctex=1 $\
 				-interaction=nonstopmode $\
@@ -8,7 +8,7 @@ LATEXMK_OPTIONS=-synctex=1 $\
 				-halt-on-error $\
 				-r $(LATEXMKRC)
 
-CHKTEX_OPTIONS=--localrc ./.chktexrc $\
+CHKTEX_OPTIONS=--localrc ./chktexrc $\
 			   --headererr $\
 			   --inputfiles $\
 			   --format=1 $\
