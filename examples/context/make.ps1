@@ -9,7 +9,7 @@ param (
     $Target
 )
 
-$chktexrc = Resolve-Path ./.chktexrc
+$chktexrc = Resolve-Path ./chktexrc
 $indentconfig = Resolve-Path ./indentconfig.yaml
 
 switch ($Target) {

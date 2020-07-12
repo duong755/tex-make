@@ -5,7 +5,7 @@ PDFLATEX_OPTIONS=-synctex=1 $\
 				-shell-escape $\
 				-halt-on-error $\
 
-CHKTEX_OPTIONS=--localrc ./.chktexrc $\
+CHKTEX_OPTIONS=--localrc ./chktexrc $\
 			   --headererr $\
 			   --inputfiles $\
 			   --format=1 $\

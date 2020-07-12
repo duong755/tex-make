@@ -2,7 +2,7 @@ CONTEXT_OPTIONS=--synctex $\
 				 --nonstopmode $\
 				 --pdftex
 
-CHKTEX_OPTIONS=--localrc ./.chktexrc $\
+CHKTEX_OPTIONS=--localrc ./chktexrc $\
 			   --headererr $\
 			   --inputfiles $\
 			   --format=1 $\
