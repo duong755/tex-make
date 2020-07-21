@@ -106,6 +106,11 @@ switch ($Target) {
                 Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
             }
 
+            $files = $(Get-ChildItem -Recurse -File)
+            $files | Where-Object -FilterScript { $_.Extension -eq ".tex" } | ForEach-Object -Process {
+                latexmk -C -outdir="$($_.DirectoryName)" $_.FullName
+            }
+
             switch -Regex ($Target) {
                 "\.pdf$" {
                     latexmk -synctex=1 `

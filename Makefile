@@ -18,7 +18,7 @@ LATEXINDENT_OPTIONS=--local=indentconfig.yaml $\
 					--overwrite
 
 
-all: updatecls
+all: updatecls clean
 	latexmk $(LATEXMK_OPTIONS) -pdf main.tex
 
 clean:
@@ -55,22 +55,22 @@ updatecls:
 		cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
 	fi
 
-%.pdf: %.tex updatecls
+%.pdf: %.tex updatecls clean
 	latexmk $(LATEXMK_OPTIONS) -pdf -pvc -outdir=$(shell dirname $<) $(shell basename $<)
 
-%.dvi: %.tex updatecls
+%.dvi: %.tex updatecls clean
 	latexmk $(LATEXMK_OPTIONS) -dvi -pvc -outdir=$(shell dirname $<) $(shell basename $<)
 
-%.ps: %.tex updatecls
+%.ps: %.tex updatecls clean
 	latexmk $(LATEXMK_OPTIONS) -ps -pvc -outdir=$(shell dirname $<) $(shell basename $<)
 
-%.pdf.o: %.tex updatecls
+%.pdf.o: %.tex updatecls clean
 	latexmk $(LATEXMK_OPTIONS) -pdf -outdir=$(shell dirname $<) $(shell basename $<)
 
-%.dvi.o: %.tex updatecls
+%.dvi.o: %.tex updatecls clean
 	latexmk $(LATEXMK_OPTIONS) -dvi -outdir=$(shell dirname $<) $(shell basename $<)
 
-%.ps.o: %.tex updatecls
+%.ps.o: %.tex updatecls clean
 	latexmk $(LATEXMK_OPTIONS) -ps -outdir=$(shell dirname $<) $(shell basename $<)
 
 # lint specific TeX file
