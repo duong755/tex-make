@@ -22,7 +22,7 @@ switch ($Target) {
         if (Get-ChildItem "*.cls") {
             Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
         }
-        latexmk -f -synctex=1 `
+        latexmk -synctex=1 `
             -interaction=nonstopmode `
             -recorder `
             -file-line-error `
@@ -40,7 +40,7 @@ switch ($Target) {
         if (Get-ChildItem "*.cls") {
             Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
         }
-        latexmk -f -synctex=1 `
+        latexmk -synctex=1 `
             -interaction=nonstopmode `
             -recorder `
             -file-line-error `
@@ -113,7 +113,7 @@ switch ($Target) {
 
             switch -Regex ($Target) {
                 "\.pdf$" {
-                    latexmk -f -synctex=1 `
+                    latexmk -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -126,7 +126,7 @@ switch ($Target) {
                     $texFileAbsPath
                 }
                 "\.dvi$" {
-                    latexmk -f -synctex=1 `
+                    latexmk -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -139,7 +139,7 @@ switch ($Target) {
                     $texFileAbsPath
                 }
                 "\.ps$" {
-                    latexmk -f -synctex=1 `
+                    latexmk -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -152,7 +152,7 @@ switch ($Target) {
                     $texFileAbsPath
                 }
                 "\.pdf\.o$" {
-                    latexmk -f -synctex=1 `
+                    latexmk -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -165,7 +165,7 @@ switch ($Target) {
                     $texFileAbsPath
                 }
                 "\.dvi\.o$" {
-                    latexmk -f -synctex=1 `
+                    latexmk -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -177,7 +177,7 @@ switch ($Target) {
                     $texFileAbsPath
                 }
                 "\.ps\.o$" {
-                    latexmk -f -synctex=1 `
+                    latexmk -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `

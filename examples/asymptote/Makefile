@@ -1,7 +1,6 @@
 LATEXMKRC=$(realpath latexmkrc)
 
-LATEXMK_OPTIONS=-f $\
-				-synctex=1 $\
+LATEXMK_OPTIONS=-synctex=1 $\
 				-interaction=nonstopmode $\
 				-recorder $\
 				-file-line-error $\
@@ -23,21 +22,21 @@ all: updatecls
 	latexmk $(LATEXMK_OPTIONS) -pdf main.tex
 
 asy:
-	@for asyfile in $(shell find . -name "*.asy"); do \
+	for asyfile in $(shell find . -name "*.asy"); do \
 		DIR=`dirname $$asyfile`; \
 		FILE=`basename $$asyfile`; \
 		echo -e "\nCompiling $$asyfile\n"; \
-		asy $$FILE -cd $$DIR; \
+		asy $$asyfile -o $$DIR/$$FILE.pdf; \
 	done
 
 clean:
-	@for file in $(shell find . -name "*.tex"); do \
+	for file in $(shell find . -name "*.tex"); do \
 		DIR=`dirname $$file`; \
 		latexmk -C -outdir=$$DIR $$file; \
 	done
 
 cleanaux:
-	@for file in $(shell find . -name "*.tex"); do \
+	for file in $(shell find . -name "*.tex"); do \
 		DIR=`dirname $$file`; \
 		latexmk -c -outdir=$$DIR $$file; \
 	done
