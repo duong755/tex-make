@@ -391,7 +391,9 @@ Silent
     \addlinespace \cr \fill \frontmatter
     \toprule \midrule \bottomrule
 
-    \tikz \draw \node \path \shade \foreach
+    \tikz \draw \node \path \shade \foreach \equiv
+    \leftrightarrow \rightarrow \leftarrow \longrightarrow \longleftarrow
+    \Leftrightarrow \Rightarrow \Leftarrow \Longrightarrow \Longleftarrow
 }[
 # Here you can put regular expressions to match Silent macros.  It was
 # designed for  the case where you  have many custom macros  sharing a
@@ -515,6 +517,7 @@ MathEnvir
 {
     displaymath math eqnarray array equation
     align alignat gather flalign multline
+    split align* equation*
 }
 
 #####################################################################
