@@ -50,6 +50,12 @@ switch ($Target) {
             -r $latexmkrc `
             ./main.tex
     }
+    "asy" {
+       $files = $(Get-ChildItem -Recurse -File)
+       $files | Where-Object -FilterScript { $_.Extension -eq ".asy" } | ForEach-Object -Process {
+            asy $_.Name -cd $_.DirectoryName
+       }
+    }
     "clean" {
         $files = $(Get-ChildItem -Recurse -File)
         $files | Where-Object -FilterScript { $_.Extension -eq ".tex" } | ForEach-Object -Process {

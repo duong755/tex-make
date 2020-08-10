@@ -26,7 +26,7 @@ asy:
 		DIR=`dirname $$asyfile`; \
 		FILE=`basename $$asyfile`; \
 		echo -e "\nCompiling $$asyfile\n"; \
-		asy $$asyfile -o $$DIR/$$FILE.pdf; \
+		asy $$FILE -cd $$DIR; \
 	done
 
 clean:
