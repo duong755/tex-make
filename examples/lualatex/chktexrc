@@ -394,6 +394,7 @@ Silent
     \tikz \draw \node \path \shade \foreach \equiv
     \leftrightarrow \rightarrow \leftarrow \longrightarrow \longleftarrow
     \Leftrightarrow \Rightarrow \Leftarrow \Longrightarrow \Longleftarrow
+    \quad \qquad \pmod \bmod \mod \pi
 }[
 # Here you can put regular expressions to match Silent macros.  It was
 # designed for  the case where you  have many custom macros  sharing a
