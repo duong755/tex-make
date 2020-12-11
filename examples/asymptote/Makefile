@@ -57,7 +57,7 @@ format:
 		latexindent $(LATEXINDENT_OPTIONS) $$file; \
 	done
 
-updatecls: clean
+updatecls: cleanaux
 	@if [ ! -z $(shell find . -maxdepth 1 -name "*.cls") ]; then \
 		mkdir -p $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
 		cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
