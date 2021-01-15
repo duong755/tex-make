@@ -29,6 +29,14 @@ asy:
 		asy $$FILE -cd $$DIR; \
 	done
 
+%.asydir:
+	@for asyfile in $(shell find $* -name "*.asy"); do \
+		DIR=`dirname $$asyfile`; \
+		FILE=`basename $$asyfile`; \
+		echo -e "\nCompiling $$asyfile\n"; \
+		asy $$FILE -cd $$DIR; \
+	done
+
 clean:
 	@for file in $(shell find . -name "*.tex"); do \
 		DIR=`dirname $$file`; \
