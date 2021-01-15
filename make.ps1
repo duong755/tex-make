@@ -112,6 +112,13 @@ switch ($Target) {
             }
 
             switch -Regex ($Target) {
+                "\.asydir$" {
+                    $dirName = [System.Text.RegularExpressions.Regex]"\.asydir$".Replace($Target, "")
+                    $asyFiles = $(Get-ChildItem -Recurse -File -Path $dirName | Where-Object -FilterScript { $_.Extension -eq ".asy" })
+                    $asyFiles | ForEach-Object -Process {
+                        asy $_.Name -cd $_.DirectoryName
+                    }
+                }
                 "\.pdf$" {
                     latexmk -f -synctex=1 `
                         -interaction=nonstopmode `
