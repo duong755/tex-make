@@ -19,10 +19,11 @@ switch ($Target) {
         if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
             New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
         }
-        if (Get-ChildItem "*.cls") {
-            Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+        $(Get-ChildItem -Recurse -File -Include "*.cls") | ForEach-Object -Process {
+            Copy-Item -Force $_.FullName "$texmfhome/tex/latex/local/class"
         }
-        latexmk -synctex=1 `
+        latexmk -f `
+            -synctex=1 `
             -interaction=nonstopmode `
             -recorder `
             -file-line-error `
@@ -37,8 +38,8 @@ switch ($Target) {
         if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
             New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
         }
-        if (Get-ChildItem "*.cls") {
-            Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+        $(Get-ChildItem -Recurse -File -Include "*.cls") | ForEach-Object -Process {
+            Copy-Item -Force $_.FullName "$texmfhome/tex/latex/local/class"
         }
         latexmk -synctex=1 `
             -interaction=nonstopmode `
@@ -91,8 +92,8 @@ switch ($Target) {
         if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
             New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
         }
-        if (Get-ChildItem "*.cls") {
-            Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+        $(Get-ChildItem -Recurse -File -Include "*.cls") | ForEach-Object -Process {
+            Copy-Item -Force $_.FullName "$texmfhome/tex/latex/local/class"
         }
     }
     Default {
@@ -108,8 +109,8 @@ switch ($Target) {
             if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
                 New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
             }
-            if (Get-ChildItem "*.cls") {
-                Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+            $(Get-ChildItem -Recurse -File -Include "*.cls") | ForEach-Object -Process {
+                Copy-Item -Force $_.FullName "$texmfhome/tex/latex/local/class"
             }
 
             $files = $(Get-ChildItem -Recurse -File)
@@ -118,15 +119,16 @@ switch ($Target) {
             }
 
             switch -Regex ($Target) {
-                "\.asydir$" {
-                    $dirName = [System.Text.RegularExpressions.Regex]"\.asydir$".Replace($Target, "")
+                "^(asy/)" {
+                    $dirName = [System.Text.RegularExpressions.Regex]"^(asy/)".Replace($Target, "")
                     $asyFiles = $(Get-ChildItem -Recurse -File -Path $dirName | Where-Object -FilterScript { $_.Extension -eq ".asy" })
                     $asyFiles | ForEach-Object -Process {
                         asy $_.Name -cd $_.DirectoryName
                     }
                 }
                 "\.pdf$" {
-                    latexmk -synctex=1 `
+                    latexmk -f `
+                        -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -139,7 +141,8 @@ switch ($Target) {
                     $texFileAbsPath
                 }
                 "\.dvi$" {
-                    latexmk -synctex=1 `
+                    latexmk -f `
+                        -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -152,7 +155,8 @@ switch ($Target) {
                     $texFileAbsPath
                 }
                 "\.ps$" {
-                    latexmk -synctex=1 `
+                    latexmk -f `
+                        -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -165,7 +169,8 @@ switch ($Target) {
                     $texFileAbsPath
                 }
                 "\.pdf\.o$" {
-                    latexmk -synctex=1 `
+                    latexmk -f `
+                        -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -178,7 +183,8 @@ switch ($Target) {
                     $texFileAbsPath
                 }
                 "\.dvi\.o$" {
-                    latexmk -synctex=1 `
+                    latexmk -f `
+                        -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -190,7 +196,8 @@ switch ($Target) {
                     $texFileAbsPath
                 }
                 "\.ps\.o$" {
-                    latexmk -synctex=1 `
+                    latexmk -f `
+                        -synctex=1 `
                         -interaction=nonstopmode `
                         -recorder `
                         -file-line-error `
@@ -204,6 +211,7 @@ switch ($Target) {
                 "\.format$" {
                     latexindent --local=$indentconfig `
                         --overwrite `
+                        --silent `
                         $texFileAbsPath
                 }
                 "\.lint$" {
