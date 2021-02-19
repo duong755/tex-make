@@ -35,10 +35,9 @@ format:
 	done
 
 updatecls:
-	@if [ ! -z $(shell find . -maxdepth 1 -name "*.cls") ]; then \
-		mkdir -p $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
-		cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
-	fi
+	mkdir -p $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
+	CLSPATH=$(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class;  \
+	find . -name "*.cls" -exec cp {} $$CLSPATH \; \
 
 %.pdf: %.tex updatecls
 	@lualatex $(LUALATEX_OPTIONS) --output-format=pdf --output-directory=$(shell dirname $<) $(shell basename $<)

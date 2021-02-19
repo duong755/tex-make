@@ -22,20 +22,10 @@ all: updatecls
 	@latexmk $(LATEXMK_OPTIONS) -pdf main.tex
 
 asy:
-	@for asyfile in $(shell find . -name "*.asy"); do \
-		DIR=`dirname $$asyfile`; \
-		FILE=`basename $$asyfile`; \
-		echo -e "\nCompiling $$asyfile\n"; \
-		asy $$FILE -cd $$DIR; \
-	done
+	@$(shell find . -type f -name "*.asy" -exec asy {} -cd `dirname {}` \;)
 
-%.asydir:
-	@for asyfile in $(shell find $* -name "*.asy"); do \
-		DIR=`dirname $$asyfile`; \
-		FILE=`basename $$asyfile`; \
-		echo -e "\nCompiling $$asyfile\n"; \
-		asy $$FILE -cd $$DIR; \
-	done
+asy/%:
+	@$(shell find $* -type f -name "*.asy" -exec asy {} -cd `dirname {}` \;)
 
 clean:
 	@for file in $(shell find . -name "*.tex"); do \
@@ -66,10 +56,9 @@ format:
 	done
 
 updatecls: cleanaux
-	@if [ ! -z $(shell find . -maxdepth 1 -name "*.cls") ]; then \
-		mkdir -p $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
-		cp *.cls $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
-	fi
+	mkdir -p $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
+	CLSPATH=$(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class;  \
+	find . -name "*.cls" -exec cp {} $$CLSPATH \; \
 
 %.pdf: %.tex updatecls
 	@latexmk $(LATEXMK_OPTIONS) -pdf -pvc -outdir=$(shell dirname $<) $(shell basename $<)
