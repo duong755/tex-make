@@ -29,7 +29,7 @@ format:
 	@$(shell find . -type f -regex ".*\.\(tex\|cls\|sty\)$$" -exec latexindent $(LATEXINDENT_OPTIONS) {} \;)
 
 updatecls:
-	mkdir -p $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
+	@mkdir -p $(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class; \
 	CLSPATH=$(shell kpsewhich -var-value=TEXMFHOME)/tex/latex/local/class;  \
 	find . -name "*.cls" -exec cp {} $$CLSPATH \; \
 
