@@ -19,8 +19,8 @@ switch ($Target) {
         if (!(Test-Path "$texmfhome/tex/latex/local/class" -PathType Container)) {
             New-Item -Path "$texmfhome/tex/latex/local/class" -ItemType Directory
         }
-        if (Get-ChildItem "*.cls") {
-            Copy-Item -Force *.cls "$texmfhome/tex/latex/local/class"
+        $(Get-ChildItem -Recurse -File -Include "*.cls") | ForEach-Object -Process {
+            Copy-Item -Force $_.FullName "$texmfhome/tex/latex/local/class"
         }
         latexmk -f -synctex=1 `
             -interaction=nonstopmode `
